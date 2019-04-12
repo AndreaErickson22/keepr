@@ -1,12 +1,15 @@
-USE keeper22;
+USE keepr22;
 
--- CREATE TABLE users (
---     id VARCHAR(255) NOT NULL,
---     username VARCHAR(20) NOT NULL,
---     email VARCHAR(255) NOT NULL,
---     hash VARCHAR(255) NOT NULL,
---     contstraint PK_users PRIMARY KEY (id),
---     UNIQUE KEY email (email)
+-- CREATE TABLE users
+-- (
+--   id VARCHAR(255) NOT NULL,
+--   username VARCHAR(20) NOT NULL,
+--   email VARCHAR(255) NOT NULL,
+--   hash VARCHAR(255) NOT NULL,
+--   CONSTRAINT PK_users PRIMARY KEY (id),
+--   UNIQUE
+--   KEY email
+--   (email)
 -- );
 
 -- CREATE TABLE vaults (
@@ -32,33 +35,43 @@ USE keeper22;
 --     shares INT DEFAULT 0,
 --     keeps INT DEFAULT 0,
 --     INDEX idx_userId (userId),
---     contstraint FK_keepsUid FOREIGN KEY (userId)
+--     CONSTRAINT FK_keepsUid FOREIGN KEY (userId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,  
---    contstraint PK_keeps PRIMARY KEY (id)
+--    CONSTRAINT PK_keeps PRIMARY KEY (id)
 -- );
 
--- CREATE TABLE vaultkeeps (
---     id int NOT NULL AUTO_INCREMENT,
+-- CREATE TABLE vaultkeeps
+-- (
+--   id int NOT NULL
+--   AUTO_INCREMENT,
 --     vaultId int NOT NULL,
 --     keepId int NOT NULL,
---     userId VARCHAR(255) NOT NULL,
+--     userId VARCHAR
+--   (255) NOT NULL,
 
---     costraint PK_vaultkeeps PRIMARY KEY (id),
---     INDEX idx_vid_kid(vaultId, keepId),
---     INDEX idx_userid(userId),
+--     CONSTRAINT PK_vaultkeeps PRIMARY KEY
+--   (id),
+--     INDEX idx_vid_kid
+--   (vaultId, keepId),
+--     INDEX idx_userid
+--   (userId),
 
---     constraint FK_vaultkeepsUid FOREIGN KEY (userId)
---         REFERENCES users(id)
---         ON DELETE CASCADE,
+--    CONSTRAINT FK_vaultkeepsUid FOREIGN KEY
+--   (userId)
+--         REFERENCES users
+--   (id)
+--         ON
+--   DELETE CASCADE,
 
---     contstraint FK_vaultkeepsVid FOREIGN KEY (vaultId)
+--    CONSTRAINT FK_vaultkeepsVid FOREIGN KEY
+--   (vaultId)
 --         REFERENCES vaults(id)
 --         ON DELETE CASCADE,
 
---     contstraint FK_vaultkeepsKid FOREIGN KEY (keepId)
---         REFERENCES keeps(id)
---         ON DELETE CASCADE
+-- CONSTRAINT FK_vaultkeepsKid FOREIGN KEY(keepId)
+-- REFERENCES keeps(id) 
+-- ON DELETE CASCADE
 -- )
 
 
