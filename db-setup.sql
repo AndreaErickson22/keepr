@@ -1,9 +1,11 @@
+USE keeper22;
+
 -- CREATE TABLE users (
 --     id VARCHAR(255) NOT NULL,
 --     username VARCHAR(20) NOT NULL,
 --     email VARCHAR(255) NOT NULL,
 --     hash VARCHAR(255) NOT NULL,
---     PRIMARY KEY (id),
+--     contstraint PK_users PRIMARY KEY (id),
 --     UNIQUE KEY email (email)
 -- );
 
@@ -12,11 +14,11 @@
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
 --     userId VARCHAR(255),
---     INDEX userId (userId),
---     FOREIGN KEY (userId)
+--     INDEX idx_userId (userId),
+--     constraint FK_vaultsUid FOREIGN KEY (userId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,  
---     PRIMARY KEY (id)
+--    constraint PK_vaults PRIMARY KEY (id)
 -- );
 
 -- CREATE TABLE keeps (
@@ -29,11 +31,11 @@
 --     views INT DEFAULT 0,
 --     shares INT DEFAULT 0,
 --     keeps INT DEFAULT 0,
---     INDEX userId (userId),
---     FOREIGN KEY (userId)
+--     INDEX idx_userId (userId),
+--     contstraint FK_keepsUid FOREIGN KEY (userId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,  
---     PRIMARY KEY (id)
+--    contstraint PK_keeps PRIMARY KEY (id)
 -- );
 
 -- CREATE TABLE vaultkeeps (
@@ -42,19 +44,19 @@
 --     keepId int NOT NULL,
 --     userId VARCHAR(255) NOT NULL,
 
---     PRIMARY KEY (id),
---     INDEX (vaultId, keepId),
---     INDEX (userId),
+--     costraint PK_vaultkeeps PRIMARY KEY (id),
+--     INDEX idx_vid_kid(vaultId, keepId),
+--     INDEX idx_userid(userId),
 
---     FOREIGN KEY (userId)
+--     constraint FK_vaultkeepsUid FOREIGN KEY (userId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,
 
---     FOREIGN KEY (vaultId)
+--     contstraint FK_vaultkeepsVid FOREIGN KEY (vaultId)
 --         REFERENCES vaults(id)
 --         ON DELETE CASCADE,
 
---     FOREIGN KEY (keepId)
+--     contstraint FK_vaultkeepsKid FOREIGN KEY (keepId)
 --         REFERENCES keeps(id)
 --         ON DELETE CASCADE
 -- )
