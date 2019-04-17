@@ -79,3 +79,9 @@ USE keepr22;
 -- SELECT * FROM vaultkeeps vk
 -- INNER JOIN keeps k ON k.id = vk.keepId 
 -- WHERE (vaultId = @vaultId AND vk.userId = @userId) 
+
+
+-- INSERT INTO keeps(name, description, img) VALUES("Dog Keepr", "this keep is all about the dogs", "https:
+-- //cdn2-www.dogtime.com/assets/uploads/gallery/golden-retriever-dogs-and-puppies/golden-retriever-dogs-puppies-9.jpg");
+
+

@@ -16,6 +16,7 @@ namespace keepr.Repositories
       _db = db;
     }
 
+    //GET ALL KEEPS
     public IEnumerable<Keep> GetAllKeeps()
     {
       return _db.Query<Keep>("SELECT * FROM keeps");
@@ -67,13 +68,13 @@ namespace keepr.Repositories
     // 
     // 
     // Vault KEEPS
-    public int CreateVaultKeep(Vaultkeep vk)
-    {
-      Keep keep = _db.Query<Keep>(@"SELECT * FROM vaultKeeps WHERE keepID = @KeepId AND vaultId = @VaultId;", vk).FirstOrDefault();
-      if (keep != null) return 0;
-      return _db.ExecuteScalar<int>(@"INSERT INTO vaultKeeps (vaultId, keepId, userId) VALUES (@VaultId, @KeepId, @UserID);
-      SELECT LAST_INSERT_ID();", vk);
-    }
+    // public int CreateVaultKeep(Vaultkeep vk)
+    // {
+    //   Keep keep = _db.Query<Keep>(@"SELECT * FROM vaultKeeps WHERE keepID = @KeepId AND vaultId = @VaultId;", vk).FirstOrDefault();
+    //   if (keep != null) return 0;
+    //   return _db.ExecuteScalar<int>(@"INSERT INTO vaultKeeps (vaultId, keepId, userId) VALUES (@VaultId, @KeepId, @UserID);
+    //   SELECT LAST_INSERT_ID();", vk);
+    // }
 
     internal Keep EditKeep(int id, Keep editedKeep, string userId)
     {

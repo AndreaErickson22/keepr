@@ -20,14 +20,29 @@ namespace keepr.Repositories
       return _db.Query<Keep>("SELECT * FROM keeps");
     }
 
-    public Vaultkeep NewVaultKeep(Vaultkeep newVaultKeep)
+    public Vaultkeep GetById(int Id)
     {
-      throw new NotImplementedException();
+      return _db.QueryFirstOrDefault<Vaultkeep>("SELECT * FROM Vaultkeep WHERE id =@id", new { Id });
     }
 
-    internal Vaultkeep NewVaultKeep(object newVaultkeep)
+
+    //new post vault keep made
+    public Vaultkeep NewVaultKeep(Vaultkeep vk)
     {
-      throw new NotImplementedException();
+      try
+      {
+        int id = _db.Execute(@"INSERT INTO Vaultkeeps (vaultId, keepId, userId)
+        VALUES (@VaultId, @KeepId, @UserId)", vk);
+
+
+        return vk;
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine(e);
+        return null;
+      }
     }
+
   }
 }

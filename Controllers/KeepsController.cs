@@ -3,6 +3,7 @@ using keepr.Models;
 using keepr.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Keepr.Controllers
 {
@@ -52,17 +53,26 @@ namespace Keepr.Controllers
     [Authorize]
     public ActionResult<Keep> Create([FromBody]Keep newKeep)
     {
-
-      string userId = HttpContext.User.Identity.Name;
-      keep.userId = userId;
-      Keep result = _kr.CreateKeep(newKeep);
-
-      if (result != null)
+      newKeep.UserId = HttpContext.User.Identity.Name;
+      if (newKeep.UserId != null)
       {
-        return result;
+        Keep result = _kr.CreateKeep(newKeep);
+        return Created("/api/keeps" + result.Id, result);
       }
-      return BadRequest("Could not make new keep");
+      return Unauthorized("you must login to create a keep");
+
     }
+
+    // string userId = HttpContext.User.Identity.Name;
+    // Keepr.userId = userId;
+    //   Keep result = _kr.CreateKeep(newKeep);
+
+    //   if (result != null)
+    //   {
+    //     return result;
+    //   }
+    //   return BadRequest("Could not make new keep");
+
 
     //Put or modify a Keep
 

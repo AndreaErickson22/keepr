@@ -21,13 +21,33 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    publicKeeps: [],
+    userKeeps: [],
+    vaults: [],
+    vaultkeeps: []
   },
   mutations: {
     setUser(state, user) {
       state.user = user
-    }
+    },
+
+    //ARE THESE CORRECT?
+    setPublicKeeps(state, data) {
+      state.publicKeeps = data
+    },
+    setUserKeeps(state, data) {
+      state.userKeeps = data
+    },
+    setVaults(state, data) {
+      state.vaults = data
+    },
+    setVaultKeeps(state, data) {
+      state.vaultkeeps = data
+    },
   },
+
+  //#region --authorization---
   actions: {
     register({ commit, dispatch }, newUser) {
       auth.post('register', newUser)
@@ -58,6 +78,33 @@ export default new Vuex.Store({
         .catch(e => {
           console.log('Login Failed')
         })
-    }
+    },
+    //#endregion
+
+    getpublicKeeps({ commit, dispatch }, publickeeps) {
+      api.get('/keeps')
+        .then(res => {
+          commit('setpublicKeeps', res.data)
+        })
+    },
+    addUserKeeps({ commit, dispatch }, keepData) {
+      api.post('/keeps', keepData)
+        .then(serverKeep => {
+          dispatch('getKeeps')
+        })
+    },
+    editKeep({ commit, dispatch }, keepData) {
+      api.put('/keeps' + keepData.keepId, keepData)
+        .then(res => {
+          dispatch('getKeeps')
+        })
+    },
+    deleteKeep({ commit, dispatch }, keepId) {
+      api.delete('/keep' + keepId)
+        .then(res => {
+          dispatch('getKeeps')
+        })
+    },
+
   }
 })
