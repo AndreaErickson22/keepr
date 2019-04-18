@@ -10,18 +10,25 @@ namespace keepr.Repositories
   public class VaultRepository
   {
     private readonly IDbConnection _db;
-    private object idVault;
+    // private object idVault;
 
     public VaultRepository(IDbConnection db)
     {
       _db = db;
     }
-
-    public Vault GetById(int id)
+    //GET VAULT BY USER ID
+    public IEnumerable<Vault> GetVaultsByUserId(string UserId)
     {
-      return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vault Where id = @Id, new {Id}");
+      return _db.Query<Vault>("SELECT * FROM vaults WHERE userId = @UserId", new { UserId });
 
     }
+
+
+    // public Vault GetById(int id)
+    // {
+    //   return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vault Where id = @Id, new {Id}");
+
+    // }
     public Vault NewVault(Vault newVault)
     {
       try
@@ -39,13 +46,13 @@ SELECT LAST INSERT ID();", newVault);
       }
     }
 
-    public Vault modifiedVault(int id, Vault editedVault)
+    public Vault modifiedVault(Vault editedVault)
     {
       try
       {
         string query = @"UPDATE vaults SET name = @editedVault.Name, description = @editedVault.Description, SELECT * FROM vaults WHERE id = @id;";
 
-        return _db.QueryFirstOrDefault<Vault>(query, new { id, editedVault });
+        return _db.QueryFirstOrDefault<Vault>(query, new { editedVault });
 
       }
       catch (Exception e)
@@ -55,10 +62,10 @@ SELECT LAST INSERT ID();", newVault);
       }
     }
 
-    internal Vault modifiedVault(Vault editedVault)
-    {
-      throw new NotImplementedException();
-    }
+    // internal Vault modifiedVault(Vault editedVault)
+    // {
+    //   throw new NotImplementedException();
+    // }
 
 
     internal bool DeleteVault(int id)

@@ -11,6 +11,8 @@ USE keepr22;
 --   KEY email
 --   (email)
 -- );
+-- INSERT INTO users(id, username, email) VALUES("22", "andrea", "andrea@andrea.com");
+
 
 -- CREATE TABLE vaults (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -23,6 +25,8 @@ USE keepr22;
 --         ON DELETE CASCADE,  
 --    constraint PK_vaults PRIMARY KEY (id)
 -- );
+
+
 
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -84,4 +88,16 @@ USE keepr22;
 -- INSERT INTO keeps(name, description, img) VALUES("Dog Keepr", "this keep is all about the dogs", "https:
 -- //cdn2-www.dogtime.com/assets/uploads/gallery/golden-retriever-dogs-and-puppies/golden-retriever-dogs-puppies-9.jpg");
 
+
+-- DELETE FROM keeps WHERE id = 1;
+-- INSERT INTO keeps(name, description, img) VALUES("Elephant Keepr", "this keep is all about the elephants", "https:
+-- //d3i6fh83elv35t.cloudfront.net/newshour/app/uploads/2015/05/542106059-1024x683.jpg");
+
+
+-- INSERT INTO vaults
+--   (name, description)
+-- VALUES("Elephant Vault", "this vault is all about the elephants");
+-- INSERT INTO vaults
+--   (name, description)
+-- VALUES("Monkey Vault", "this vault is all about the monkeys");
 

@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System;
 using keepr.Models;
@@ -8,32 +7,45 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace keepr.Controllers
 {
-  [Route("api/controller]")]
+  [Route("api/[controller]")]
   [ApiController]
 
-  public class VaultController : ControllerBase
+  public class VaultsController : ControllerBase
   {
     private readonly VaultRepository _vr;
-    private string id;
+    // private string id;
 
-    public string Id { get; private set; }
+    // public string Id { get; private set; }
 
-    public VaultController(VaultRepository vr)
+    public VaultsController(VaultRepository vr)
     {
       _vr = vr;
     }
 
-    //GET VAULT BY ID
-    [HttpGet("{id}")]
-    public ActionResult<Vault> Get(int id)
+    //GET VAULT BY User ID
+    [HttpGet("user")]
+    public ActionResult<IEnumerable<Vault>> GetVaultsByUser(string user)
     {
-      Vault found = _vr.GetById(id);
-      if (found != null)
-      { return Ok(found); }
-
-      return BadRequest("Could not get vault by id");
-
+      string UserId = HttpContext.User.Identity.Name;
+      IEnumerable<Vault> vaultList = _vr.GetVaultsByUserId(UserId);
+      if (vaultList != null)
+      {
+        return Ok(vaultList);
+      }
+      return BadRequest("Could not collect list of vaults");
     }
+
+
+    // [HttpGet("{id}")]
+    // public ActionResult<Vault> Get(int id)
+    // {
+    //   Vault found = _vr.GetById(id);
+    //   if (found != null)
+    //   { return Ok(found); }
+
+    //   return BadRequest("Could not get vault by id");
+
+    // }
 
     // POST
 

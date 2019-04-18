@@ -31,8 +31,6 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user
     },
-
-    //ARE THESE CORRECT?
     setPublicKeeps(state, data) {
       state.publicKeeps = data
     },
@@ -80,31 +78,66 @@ export default new Vuex.Store({
         })
     },
     //#endregion
+    ///#region--Keeps--
 
-    getpublicKeeps({ commit, dispatch }, publickeeps) {
-      api.get('/keeps')
+    addUserKeeps({ commit, dispatch }, payload) {
+      api.post('/keeps', payload)
         .then(res => {
-          commit('setpublicKeeps', res.data)
+          dispatch('getUsersKeeps')
         })
     },
-    addUserKeeps({ commit, dispatch }, keepData) {
-      api.post('/keeps', keepData)
-        .then(serverKeep => {
-          dispatch('getKeeps')
-        })
-    },
-    editKeep({ commit, dispatch }, keepData) {
-      api.put('/keeps' + keepData.keepId, keepData)
+    getUserKeeps({ commit }) {
+      api.get('/keeps/user')
         .then(res => {
-          dispatch('getKeeps')
+          commit("setUserKeeps", res.data)
+        })
+      router.push({ name: "keeps" })
+    },
+    editKeep({ commit, dispatch }, payload) {
+      api.put('/keeps', payload)
+        .then(res => {
+          console.log("keep edited")
         })
     },
     deleteKeep({ commit, dispatch }, keepId) {
-      api.delete('/keep' + keepId)
+      api.delete('/keeps' + keepId)
         .then(res => {
-          dispatch('getKeeps')
+          console.log("keep deleted")
+          dispatch('getUserKeeps')
         })
     },
+    //#endregion--keeps--
 
-  }
-})
+    getUserVaults({ commit, dispatch }, payload) {
+      api.get('vaults/', payload)
+        .then(res => {
+          dispatch("getUserVaults", res.data)
+        })
+    },
+    addUserVaults({ commit, dispatch }, payload) {
+      api.post('vaults/', payload)
+        .then(res => { dispatch('getUserVaults') }
+        )
+    }
+  },
+  deleteVault({ commit, dispatch }, vaultId) {
+    api.delete('vaults/' + vaultId)
+      .then(res => {
+        console.log("vault deleted")
+        dispatch('getUserVaults')
+      })
+  },
+  // getVault({ commit, dispatch, state)
+  //     } 
+  //       auth.get('authenticate')
+  //         .then(res => {
+  //         api.get('vaults/' res.data.id).then(re)
+  //           .then(res => {
+  //             commit("setUserVaults", res.data)
+  //           })
+  //       },
+
+
+}
+)
+

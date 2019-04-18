@@ -15,7 +15,7 @@ namespace keepr.Models
     public string Img { get; set; }
     [Required]
     [Range(0, 255)]
-    public int IsPrivate { get; set; }
+    public bool IsPrivate { get; set; }
     public int Views { get; set; }
     public int Shares { get; set; }
     public int Keeps { get; set; }

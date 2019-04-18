@@ -7,14 +7,14 @@ using System.Collections.Generic;
 
 namespace keepr.Controllers
 {
-  [Route("api/controller]")]
+  [Route("api/[controller]")]
   [ApiController]
   // [Authorize]
   public class VaultKeepsController : ControllerBase
 
   {
     private readonly VaultKeepsRepository _vkr;
-    private object newVaultkeep;
+    // private object newVaultkeep;
 
     public VaultKeepsController(VaultKeepsRepository vkr)
     {

@@ -12,9 +12,9 @@ namespace Keepr.Controllers
   public class KeepsController : ControllerBase
   {
     private readonly KeepRepository _kr;
-    private object keep;
+    // private object keep;
 
-    public string Id { get; private set; }
+    // public string Id { get; private set; }
 
     public KeepsController(KeepRepository kr)
     {
@@ -34,18 +34,32 @@ namespace Keepr.Controllers
       return BadRequest("Could not collect list of keeps");
     }
 
-    //Get by Keep Id
-
-    [HttpGet("{id}")]
-    public ActionResult<IEnumerable<Keep>> Get(int id)
+    //Get All Keeps by user id
+    [HttpGet("user")]
+    public ActionResult<IEnumerable<Keep>> GetByUser(string user)
     {
-      Keep keepId = _kr.GetById(id);
-      if (keepId != null)
+      string UserId = HttpContext.User.Identity.Name;
+      IEnumerable<Keep> keepList = _kr.GetByUserId(UserId);
+      if (keepList != null)
       {
-        return Ok(keepId);
+        return Ok(keepList);
       }
-      return BadRequest("Unable to process your request for Keeps by id");
+      return BadRequest("Could not collect list of keeps");
     }
+
+
+    // //Get one by Keep Id
+
+    // [HttpGet("{id}")]
+    // public ActionResult<IEnumerable<Keep>> Get(int id)
+    // {
+    //   Keep keepId = _kr.GetById(id);
+    //   if (keepId != null)
+    //   {
+    //     return Ok(keepId);
+    //   }
+    //   return BadRequest("Unable to process your request for Keeps by id");
+    // }
 
     //Post or Create a Keep
 
@@ -57,48 +71,32 @@ namespace Keepr.Controllers
       if (newKeep.UserId != null)
       {
         Keep result = _kr.CreateKeep(newKeep);
-        return Created("/api/keeps" + result.Id, result);
+        return Ok(result);
       }
       return Unauthorized("you must login to create a keep");
 
     }
 
-    // string userId = HttpContext.User.Identity.Name;
-    // Keepr.userId = userId;
-    //   Keep result = _kr.CreateKeep(newKeep);
 
-    //   if (result != null)
-    //   {
-    //     return result;
-    //   }
-    //   return BadRequest("Could not make new keep");
-
-
-    //Put or modify a Keep
-
-    [HttpPut("{id}")]
-    [Authorize]
-    public ActionResult<Keep> Put(int id, [FromBody]Keep editedKeep)
+    //EDIT UPDATE A KEEP
+    [HttpPut]
+    public ActionResult<string> EditKeep([FromBody]Keep editedKeep)
     {
-      //must be logged in to edit a keep
-      string userId = HttpContext.User.Identity.Name;
-      Keep result = _kr.EditKeep(id, editedKeep, userId);
+      int result = _kr.EditKeep(editedKeep);
 
-      if (result != null)
+      if (result == 1)
       {
-        return result;
+        return Ok("edit complete");
       }
       return BadRequest("Could not modify keep");
     }
 
     //DELETE KEEP
 
-    // [Authorize]
     [HttpDelete("{id}")]
     public ActionResult<string> DeleteKeep(int id)
     {
       if (_kr.DeleteKeep(id))
-
       {
         return Ok();
       }

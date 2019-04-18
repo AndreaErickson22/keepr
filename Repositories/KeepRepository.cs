@@ -21,20 +21,25 @@ namespace keepr.Repositories
     {
       return _db.Query<Keep>("SELECT * FROM keeps");
     }
-    // GET KEEP BY ID
-    public Keep GetById(int Id)
+
+    //Get all Keeps by user id
+    public IEnumerable<Keep> GetByUserId(string userId)
     {
-      return _db.QueryFirstOrDefault<Keep>("SELECT * FROM keeps WHERE id =@Id", new { Id });
+      return _db.Query<Keep>("SELECT * FROM keeps WHERE userId =@UserId", param: new { userId });
     }
 
-
+    // // GET KEEP BY ID
+    // public Keep GetById(int Id)
+    // {
+    //   return _db.QueryFirstOrDefault<Keep>("SELECT * FROM keeps WHERE id =@Id", new { Id });
+    // }
 
     //CREATE KEEP
     public Keep CreateKeep(Keep keep)
     {
 
       int id = _db.ExecuteScalar<int>(@"INSERT INTO keeps ( name, 
-        description, userId, img) VALUES(@Name, @Description, @UserId, @Img); SELECT LAST_INSERT_ID(); ", keep);
+        description, userId, img, isPrivate) VALUES(@Name, @Description, @UserId, @Img, @IsPrivate); SELECT LAST_INSERT_ID(); ", keep);
       if (id == 0)
       {
         return null;
@@ -43,42 +48,28 @@ namespace keepr.Repositories
       return keep;
     }
 
+    //EDIT KEEP
+
+    public int EditKeep(Keep editedKeep)
+    {
+      try
+      {
+        return _db.Execute($@"UPDATE keeps SET views = @Views, shares=@Shares, keeps=@Keeps WHERE id = @Id;", editedKeep);
+      }
+      catch (Exception ex)
+      {
+        System.Console.WriteLine(ex);
+        return 0;
+      }
+    }
+
+
     //DELETE KEEP
-    public bool DeleteKeep(int id)
+    internal bool DeleteKeep(int id)
     {
-      int successfulDelete = _db.Execute("DELETE FROM keeps WHERE id = @id", new { id });
+      int successfulDelete = _db.Execute(@"DELETE FROM keeps WHERE id = @id", new { id });
       return successfulDelete > 0;
-
-    }
-
-    internal Keep NewKeep(Keep newKeep)
-    {
-      throw new NotImplementedException();
-    }
-
-    internal Keep PostKeep(Keep newKeep)
-    {
-      throw new NotImplementedException();
-    }
-
-
-
-
-    // 
-    // 
-    // 
-    // Vault KEEPS
-    // public int CreateVaultKeep(Vaultkeep vk)
-    // {
-    //   Keep keep = _db.Query<Keep>(@"SELECT * FROM vaultKeeps WHERE keepID = @KeepId AND vaultId = @VaultId;", vk).FirstOrDefault();
-    //   if (keep != null) return 0;
-    //   return _db.ExecuteScalar<int>(@"INSERT INTO vaultKeeps (vaultId, keepId, userId) VALUES (@VaultId, @KeepId, @UserID);
-    //   SELECT LAST_INSERT_ID();", vk);
-    // }
-
-    internal Keep EditKeep(int id, Keep editedKeep, string userId)
-    {
-      throw new NotImplementedException();
     }
   }
+
 }
