@@ -23,18 +23,20 @@ namespace keepr.Repositories
 
     }
 
+    //GET VAULT BY VAULT ID
+    public Vault GetById(int id)
+    {
+      return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vaults Where id = @Id, new {Id}");
 
-    // public Vault GetById(int id)
-    // {
-    //   return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vault Where id = @Id, new {Id}");
+    }
 
-    // }
+    //NEW VAULT REPO
     public Vault NewVault(Vault newVault)
     {
       try
       {
         int id = _db.ExecuteScalar<int>(@"INSERT INTO vaults(name, description, userId) VALUES (@Name, @Description, @UserId);
-SELECT LAST INSERT ID();", newVault);
+SELECT LAST_INSERT_ID();", newVault);
         newVault.Id = id;
         return newVault;
 
@@ -45,7 +47,7 @@ SELECT LAST INSERT ID();", newVault);
         return null;
       }
     }
-
+    //EDITED VAULT REPO
     public Vault modifiedVault(Vault editedVault)
     {
       try
@@ -62,23 +64,17 @@ SELECT LAST INSERT ID();", newVault);
       }
     }
 
-    // internal Vault modifiedVault(Vault editedVault)
-    // {
-    //   throw new NotImplementedException();
-    // }
 
-
-    internal bool DeleteVault(int id)
+    //DELETE VAULT REPO
+    internal bool DeleteVault(int id, string userId)
     {
-      int success = _db.Execute("DELETE FROM vaults WHERE id = @id", new { id });
+      int success = _db.Execute("DELETE FROM vaults WHERE id = @id AND userId = @UserId", new { id, userId });
       return success > 0;
     }
 
-
-
-
-
-
-
+    internal Vaultkeep NewVaultKeep(Vaultkeep newVaultKeep)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

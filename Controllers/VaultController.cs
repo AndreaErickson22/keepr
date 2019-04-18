@@ -23,10 +23,11 @@ namespace keepr.Controllers
     }
 
     //GET VAULT BY User ID
-    [HttpGet("user")]
-    public ActionResult<IEnumerable<Vault>> GetVaultsByUser(string user)
+    [HttpGet]
+    [Authorize]
+    public ActionResult<IEnumerable<Vault>> GetVaultsByUser(string UserId)
     {
-      string UserId = HttpContext.User.Identity.Name;
+      UserId = HttpContext.User.Identity.Name;
       IEnumerable<Vault> vaultList = _vr.GetVaultsByUserId(UserId);
       if (vaultList != null)
       {
@@ -50,8 +51,10 @@ namespace keepr.Controllers
     // POST
 
     [HttpPost]
+    [Authorize]
     public ActionResult<Vault> Create([FromBody]Vault newVault)
     {
+      newVault.UserId = HttpContext.User.Identity.Name;
       Vault result = _vr.NewVault(newVault);
       if (result != null)
       {
@@ -62,7 +65,7 @@ namespace keepr.Controllers
     }
 
 
-    //PUT
+    //PUT Edit
 
     [HttpPut]
 
@@ -81,9 +84,11 @@ namespace keepr.Controllers
     //DELETE VAULT
 
     [HttpDelete("{id}")]
+    [Authorize]
     public ActionResult<string> DeleteVault(int id)
     {
-      bool successful = _vr.DeleteVault(id);
+      string userId = HttpContext.User.Identity.Name;
+      bool successful = _vr.DeleteVault(id, userId);
       {
         if (!successful)
         { return BadRequest("Unable to process delete."); }

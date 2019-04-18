@@ -31,31 +31,33 @@ namespace keepr.Controllers
     }
 
 
-    //POST BY VAULT KEEP
-    [HttpPost]
-    public ActionResult<Vaultkeep> newVaultKeep([FromBody]Vaultkeep newVaultKeep)
-    {
-      Vaultkeep result = _vkr.NewVaultKeep(newVaultKeep);
-      if (newVaultKeep == null)
-      {
-        return BadRequest("did not create new vault keep");
-      }
-      return Ok(newVaultKeep)
-        ;
-    }
+    //   //Create VAULT KEEP
+    //   [HttpPost("{vaultId}")]
+    //   [Authorize]
+    //   public ActionResult<Vaultkeep> newVaultKeep([FromBody]Vaultkeep newVaultKeep)
+    //   {
+    //     newVaultKeep.UserId = HttpContext.User.Identity.Name;
+    //     Vaultkeep result = _vkr.NewVaultKeep(newVaultKeep);
+    //     if (newVaultKeep == null)
+    //     {
+    //       return BadRequest("did not create new vault keep");
+    //     }
+    //     return Ok(newVaultKeep)
+    //       ;
+    //   }
 
+    // }
+
+    // // //DELETE KEEPS FROM VAULT
+
+    // [HttpDelete("{id}")]
+    // public ActionResult<string> Delete[FromBody] VaultKeepsController vaultkeep)
+    // {
+    //  var result = _vkr.DeleteVaultKeep(vaultkeep);
+    //   if (!successful) 
+    //   { return BadRequest(); }
+    //   return Ok();
   }
-
-  // // //DELETE KEEPS FROM VAULT
-
-  // [HttpDelete("{id}")]
-  // public ActionResult<string> Delete[FromBody] VaultKeepsController vaultkeep)
-  // {
-  //  var result = _vkr.DeleteVaultKeep(vaultkeep);
-  //   if (!successful) 
-  //   { return BadRequest(); }
-  //   return Ok();
-}
 // //Get ALL KEEPS IN VAULT BY USER ID
 // [HttpGet("{id}/user")]
 // public ActionResult<IEnumerable<User>> GetVaultKeepsUserId(int id)

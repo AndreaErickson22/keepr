@@ -26,23 +26,22 @@ namespace keepr.Repositories
     }
 
 
-    //new post vault keep made
-    public Vaultkeep NewVaultKeep(Vaultkeep vk)
-    {
-      try
-      {
-        int id = _db.Execute(@"INSERT INTO Vaultkeeps (vaultId, keepId, userId)
-        VALUES (@VaultId, @KeepId, @UserId)", vk);
-
-
-        return vk;
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine(e);
-        return null;
-      }
-    }
+    // //new post vault keep made
+    // public Vaultkeep NewVaultKeep(Vaultkeep vaultKeepToCreate)
+    // {
+    //   try
+    //   {
+    //     int id = _db.ExecuteScalar<int>(@"INSERT INTO Vaultkeeps (vaultId, keepId, userId)
+    //     VALUES (@VaultId, @KeepId, @UserId)); SELECT LAST_INSERT_ID();,vaultKeepToCreate);",
+    //     vaultKeepToCreate.Id = id; 
+    //   return vaultKeepToCreate;
+    //   }
+    //   catch (Exception e)
+    //   {
+    //     Console.WriteLine(e);
+    //     return null;
+    //   }
+    // }
 
   }
 }
