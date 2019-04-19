@@ -36,12 +36,14 @@
                 placeholder="Keep Description"
               >
             </div>
+
             <button type="submit" class="btn btn-success mb-3 shadow">Post Keep</button>
           </form>
         </div>
+        <!-- vaultform -->
         <div class="col-6">
           <form class="Form-BG">
-            <div name="vault-form" class="form-group col-12 text-center" @submit.prevent="addVault">
+            <div name="vault-form" class="form-group text-center" @submit.prevent="addVault">
               <h3>Create a new Vault</h3>
               <label for="formGroupExampleInput">Vault Name</label>
               <input
@@ -68,7 +70,10 @@
         </div>
       </div>
     </div>
-    <private-keeps></private-keeps>
+    <vaults v-for="vault in vaults" :vault="vault"></vaults>
+    <div class="col-12">
+      <private-keeps></private-keeps>
+    </div>
   </div>
 </template>
 
@@ -109,12 +114,17 @@ export default {
     },
     userId() {
       return this.$store.state.keeps;
+    },
+    vaults() {
+      return this.$store.state.vaults;
     }
   },
 
   components: {
-    PrivateKeeps
+    PrivateKeeps,
+    Vaults
   },
+
   methods: {
     register() {
       this.$store.dispatch("register", this.newUser);
@@ -128,7 +138,8 @@ export default {
       this.$store.dispatch("addUserKeep", newKeep);
       this.newKeep = { name: "", description: "", img: "" };
     },
-    addUserVaults() {
+    addVault() {
+      debugger;
       this.$store.dispatch("addUserVaults", this.newVault);
       this.newVault = { name: "", description: "" };
     }

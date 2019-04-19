@@ -1,14 +1,10 @@
 <template>
-  <div class="VaultView">
+  <div class="Vaults">
     <div class="row d-flex justify-content-center m-3">
       <div class="card" style="width: 18rem;">
         <div class="card-body vault-card rounded">
-          <!-- this is where the view count will go -->
-          <!-- <p>{{taskData.createdAt | formatTime}}</p> -->
-          <h5 class="card-title">Vault page</h5>
-          <p
-            class="card-text"
-          >With supporting text below as a natural lead-in to additional content.</p>
+          <h5 class="card-title">{{vault.name}}</h5>
+          <p class="card-text">{{vault.description}}</p>
           <a href="#" class="btn btn-primary">Show me my vault</a>
         </div>
       </div>
@@ -19,11 +15,18 @@
 <script>
 export default {
   name: "Vaults",
-  props: [],
+  props: ["vault"],
   data() {
     return {};
   },
-  computed: {},
+  mounted() {
+    this.$store.dispatch("getUserVaults");
+  },
+  computed: {
+    Vaults() {
+      return this.$store.state.userVaults;
+    }
+  },
   methods: {},
   components: {}
 };

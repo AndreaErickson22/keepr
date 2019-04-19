@@ -7,12 +7,14 @@
 
         <div class="card-body">
           <h5 class="card-title">{{keep.name}}</h5>
-          <p
-            class="card-text"
-          >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <!-- <a href="#" class="btn btn-primary">Keep View Count</a>
-          <a href="#" class="btn btn-primary">Add to Vault</a>-->
-          <a href="#" class="btn btn-primary">Delete Keep</a>
+          <p class="card-text"></p>
+          <a
+            @click="addKeepView(keep)"
+            href="#"
+            class="btn btn-primary"
+          >Keep View Count {{keep.views}}</a>
+          <a @click="addKeepCount(keep)" href="#" class="btn btn-primary">Add to Vault{{keep.keeps}}</a>
+          <a @click="deleteKeep(keep)" href="#" class="btn btn-primary">Delete Keep</a>
         </div>
       </div>
     </div>
@@ -42,6 +44,18 @@ export default {
     // goToKeepView(keepid) {
     //   this.$router.push({ name: "keeps", params: { keepid: keepid } });
     // }
+
+    addKeepView(keep) {
+      keep.views++;
+      this.$store.dispatch("addKeepView", keep);
+    },
+    addKeepCount(keep) {
+      keep.keeps++;
+      this.$store.dispatch("addKeepCount", keep);
+    },
+    deleteKeep(keep) {
+      this.$store.dispatch("deleteKeep", keep);
+    }
   },
   components: {}
 };

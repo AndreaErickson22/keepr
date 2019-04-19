@@ -121,8 +121,8 @@ export default new Vuex.Store({
           console.log("keep edited")
         })
     },
-    deleteKeep({ commit, dispatch }, keepId) {
-      api.delete('/keeps' + keepId)
+    deleteKeep({ commit, dispatch }, keep) {
+      api.delete(`keeps/${keep.id}`, keep)
         .then(res => {
           console.log("keep deleted")
           dispatch('getUserKeeps')
@@ -131,14 +131,15 @@ export default new Vuex.Store({
     //#endregion--keeps--
 
     getUserVaults({ commit, dispatch }, payload) {
-      api.get('vaults/', payload)
+      api.get('/vaults', payload)
         .then(res => {
           commit("setVaults", res.data)
         })
 
     },
     addUserVaults({ commit, dispatch }, payload) {
-      api.post('vaults/', payload)
+      debugger
+      api.post('/vaults', payload)
         .then(res => {
           dispatch('getUserVaults')
         })
@@ -173,6 +174,18 @@ export default new Vuex.Store({
         })
         .catch(e => {
           console.log("Cannot delete this vault")
+        })
+    },
+    addKeepView({ commit, dispatch }, keep) {
+      api.put(`keeps/${keep.id}`, keep)
+        .then(res => {
+          dispatch('getUserKeeps')
+        })
+    },
+    addKeepCount({ commit, dispatch }, keep) {
+      api.put(`keeps/${keep.id}`, keep)
+        .then(res => {
+          dispatch('getUserKeeps')
         })
     }
   }

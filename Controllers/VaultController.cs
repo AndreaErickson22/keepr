@@ -37,16 +37,6 @@ namespace keepr.Controllers
     }
 
 
-    // [HttpGet("{id}")]
-    // public ActionResult<Vault> Get(int id)
-    // {
-    //   Vault found = _vr.GetById(id);
-    //   if (found != null)
-    //   { return Ok(found); }
-
-    //   return BadRequest("Could not get vault by id");
-
-    // }
 
     // POST
 
