@@ -71,7 +71,6 @@ SELECT LAST_INSERT_ID();", newVault);
       int success = _db.Execute("DELETE FROM vaults WHERE id = @id AND userId = @UserId", new { id, userId });
       return success > 0;
     }
-
     internal Vaultkeep NewVaultKeep(Vaultkeep newVaultKeep)
     {
       throw new NotImplementedException();

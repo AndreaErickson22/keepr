@@ -89,14 +89,12 @@ namespace keepr.Controllers
     {
       string userId = HttpContext.User.Identity.Name;
       bool successful = _vr.DeleteVault(id, userId);
-      {
-        if (!successful)
-        { return BadRequest("Unable to process delete."); }
-        return Ok("Vault was successfully deleted.");
-      }
-
+      if (!successful)
+      { return BadRequest("Unable to process delete."); }
+      return Ok("Vault was successfully deleted.");
     }
 
   }
 
 }
+

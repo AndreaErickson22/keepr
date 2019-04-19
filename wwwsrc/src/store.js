@@ -22,10 +22,11 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     user: {},
-    publicKeeps: [],
+    publicKeeps: {},
+    publicVault: {},
     userKeeps: [],
     vaults: [],
-    vaultkeeps: []
+    vaultKeeps: []
   },
   mutations: {
     setUser(state, user) {
@@ -41,8 +42,12 @@ export default new Vuex.Store({
       state.vaults = data
     },
     setVaultKeeps(state, data) {
-      state.vaultkeeps = data
+      state.vaultKeeps = data
     },
+    setPublicVault(state, data) {
+      state.publicVault = data
+    },
+
   },
 
   //#region --authorization---
@@ -118,26 +123,20 @@ export default new Vuex.Store({
       api.post('vaults/', payload)
         .then(res => { dispatch('getUserVaults') }
         )
-    }
-  },
-  deleteVaults({ commit, dispatch }, vaultId) {
-    api.delete('vaults/' + vaultId)
-      .then(res => {
-        console.log("vault deleted")
-        dispatch('getUserVaults')
-      })
-  },
-  // getVault({ commit, dispatch, state)
-  //     } 
-  //       auth.get('authenticate')
-  //         .then(res => {
-  //         api.get('vaults/' res.data.id).then(re)
-  //           .then(res => {
-  //             commit("setUserVaults", res.data)
-  //           })
-  //       },
+
+    },
+    deleteVault({ commit, dispatch }, payload) {
+      api.delete('vaults/' + payload.id)
+        .then(res => {
+          dispatch('getUserVaults')
+        })
+        .catch(e => {
+          console.log("Cannot delete this vault")
+        })
+    },
 
 
+
+  }
 }
 )
-
