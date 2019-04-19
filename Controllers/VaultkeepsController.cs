@@ -34,20 +34,20 @@ namespace keepr.Controllers
     }
 
 
-    //Create VAULT KEEP
-    // [HttpPost("{vaultId}")]
-    // [Authorize]
-    // public ActionResult<Vaultkeep>createVaultKeep([FromBody]Vaultkeep newVaultKeep)
-    // {
-    //  newVaultKeep.UserId = HttpContext.User.Identity.Name;
-    //   Vaultkeep result = _vkr.createVaultKeep(newVaultKeep);
-    //   if (result == null)
-    //   {
-    //     return BadRequest("did not create new vault keep");
-    //   }
-    //   return Ok(result);
+    // Create VAULT KEEP
+    [HttpPost("{vaultId}")]
+    [Authorize]
+    public ActionResult<Vaultkeep> createVaultKeep([FromBody]Vaultkeep newVaultKeep)
+    {
+      newVaultKeep.UserId = HttpContext.User.Identity.Name;
+      Vaultkeep result = _vkr.createVaultKeep(newVaultKeep);
+      if (result == null)
+      {
+        return BadRequest("did not create new vault keep");
+      }
+      return Ok(result);
 
-    // }
+    }
 
 
     //Get ALL KEEPS IN VAULT BY KEEP ID

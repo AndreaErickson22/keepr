@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Welcome To Your Dashboard, {{username}}.</h1>
+    <h1>Welcome To Your Dashboard</h1>
     <div class="container-fluid">
       <div class="row d-flex justify-content-center">
         <div class="col-6">
@@ -42,8 +42,8 @@
         </div>
         <!-- vaultform -->
         <div class="col-6">
-          <form class="Form-BG">
-            <div name="vault-form" class="form-group text-center" @submit.prevent="addVault">
+          <form @submit.prevent="addVault()" class="Form-BG">
+            <div name="vault-form" class="form-group text-center">
               <h3>Create a new Vault</h3>
               <label for="formGroupExampleInput">Vault Name</label>
               <input
@@ -139,7 +139,6 @@ export default {
       this.newKeep = { name: "", description: "", img: "" };
     },
     addVault() {
-      debugger;
       this.$store.dispatch("addUserVaults", this.newVault);
       this.newVault = { name: "", description: "" };
     }

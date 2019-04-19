@@ -8,9 +8,9 @@
         <div class="card-body">
           <h5 class="card-title">{{keep.name}}</h5>
           <p class="card-text">{{keep.description}}</p>
-          <a href="#" class="btn btn-primary">Keep View Count</a>
-          <a href="#" class="btn btn-primary">Add to Vault</a>
-          <!-- <a href="#" class="btn btn-primary">Delete Keep</a> -->
+          <a class="btn btn-primary">Keep View Count</a>
+          <a class="btn btn-primary">Add to Vault</a>
+          <!-- <a   class="btn btn-primary">Delete Keep</a> -->
         </div>
       </div>
     </div>

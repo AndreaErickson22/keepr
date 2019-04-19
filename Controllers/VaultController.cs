@@ -3,7 +3,10 @@ using System;
 using keepr.Models;
 using keepr.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace keepr.Controllers
 {
@@ -24,7 +27,7 @@ namespace keepr.Controllers
 
     //GET VAULT BY User ID
     [HttpGet]
-    [Authorize]
+    // [Authorize]
     public ActionResult<IEnumerable<Vault>> GetVaultsByUser(string UserId)
     {
       UserId = HttpContext.User.Identity.Name;
@@ -41,7 +44,7 @@ namespace keepr.Controllers
     // POST
 
     [HttpPost]
-    [Authorize]
+    // [Authorize]
     public ActionResult<Vault> Create([FromBody]Vault newVault)
     {
       newVault.UserId = HttpContext.User.Identity.Name;

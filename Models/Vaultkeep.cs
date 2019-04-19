@@ -9,7 +9,7 @@ namespace keepr.Models
     [Required]
     public int KeepId { get; set; }
 
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     public int Id { get; internal set; }
   }
 }

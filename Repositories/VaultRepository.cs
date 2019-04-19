@@ -35,7 +35,7 @@ namespace keepr.Repositories
     {
       try
       {
-        int id = _db.ExecuteScalar<int>(@"INSERT INTO vaults(name, description, userId) VALUES (@Name, @Description, @UserId);
+        int id = _db.ExecuteScalar<int>(@"INSERT INTO vaults(name, description, id, userId) VALUES (@Name, @Description, @id, @UserId);
 SELECT LAST_INSERT_ID();", newVault);
         newVault.Id = id;
         return newVault;

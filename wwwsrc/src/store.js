@@ -138,8 +138,7 @@ export default new Vuex.Store({
 
     },
     addUserVaults({ commit, dispatch }, payload) {
-      debugger
-      api.post('/vaults', payload)
+      api.post('Vaults', payload)
         .then(res => {
           dispatch('getUserVaults')
         })
@@ -151,8 +150,9 @@ export default new Vuex.Store({
       commit('setPublicVault', payload)
       dispatch('getVaultKeeps', payload.id)
     },
-    addToVault({ commit, dispatch }, payload) {
-      api.post('vaults/' + payload)
+
+    addKeeptoVault({ commit, dispatch }, payload) {
+      api.post('vaultkeeps/' + payload.VaultId, payload)
         .then(res => {
           dispatch('getVaultKeeps', payload.vaultId)
         })
@@ -160,6 +160,7 @@ export default new Vuex.Store({
           console.log("cannot make vault keep at this time")
         })
     },
+
     //   getvaultKeeps({ commit, dispatch }, vaultId)
     //   api.get('vaults/' + vaultId + '/keeps')
     //     .then(res => {

@@ -5,7 +5,8 @@
         <div class="card-body vault-card rounded">
           <h5 class="card-title">{{vault.name}}</h5>
           <p class="card-text">{{vault.description}}</p>
-          <a href="#" class="btn btn-primary">Show me my vault</a>
+          <a class="btn btn-primary">Show me my vault</a>
+          <a @click="deleteVault(vault)" class="btn btn-primary">Delete my vault</a>
         </div>
       </div>
     </div>
@@ -27,7 +28,11 @@ export default {
       return this.$store.state.userVaults;
     }
   },
-  methods: {},
+  methods: {
+    deleteVault(vault) {
+      this.$store.dispatch("deleteVault", vault);
+    }
+  },
   components: {}
 };
 </script>

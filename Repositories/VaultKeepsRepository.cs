@@ -31,22 +31,22 @@ namespace keepr.Repositories
     // }
 
 
-    //new post vault keep made
-    // public Vaultkeep createVaultKeep(Vaultkeep vaultKeepToCreate)
-    // {
-    //   try
-    //   {
-    //     int id = _db.ExecuteScalar<int>(@"INSERT INTO vaultKeeps (vaultId, keepId, userId)
-    //     VALUES (@VaultId, @KeepId, @UserId)); SELECT LAST_INSERT_ID();,vaultKeepToCreate);",
-    //     vaultKeepToCreate.Id = id; 
-    //   return vaultKeepToCreate;
-    //   }
-    //   catch (Exception e)
-    //   {
-    //     Console.WriteLine(e);
-    //     return null;
-    //   }
-    // }
+    // // new post vault keep made
+    public Vaultkeep createVaultKeep(Vaultkeep vaultKeepToCreate)
+    {
+      try
+      {
+        int id = _db.ExecuteScalar<int>(@"INSERT INTO vaultKeeps (id, vaultId, keepId, userId)
+        VALUES (@Id, @VaultId, @KeepId, @UserId); SELECT LAST_INSERT_ID();", vaultKeepToCreate);
+        vaultKeepToCreate.Id = id;
+        return vaultKeepToCreate;
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine(e);
+        return null;
+      }
+    }
     public IEnumerable<Keep> GetVaultKeep(int vaultId, string userId)
     {
       return _db.Query<Keep>(@"SELECT * FROM vaultkeeps vkr  INNER JOIN keeps k ON k.id = vk.keepId WHERE(vaultId = @vaultId AND vk.userId = @userId)", new { vaultId, userId });
