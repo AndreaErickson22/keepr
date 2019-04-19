@@ -121,22 +121,45 @@ export default new Vuex.Store({
     },
     addUserVaults({ commit, dispatch }, payload) {
       api.post('vaults/', payload)
-        .then(res => { dispatch('getUserVaults') }
-        )
-
-    },
-    deleteVault({ commit, dispatch }, payload) {
-      api.delete('vaults/' + payload.id)
         .then(res => {
           dispatch('getUserVaults')
         })
         .catch(e => {
-          console.log("Cannot delete this vault")
+          console.log("cannot make vault")
         })
     },
+    setPublicVault({ commit, dispatch }, payload) {
+      commit('setPublicVault', payload)
+      dispatch('getVaultKeeps', payload.id)
+    },
+    addToVault({ commit, dispatch }, payload) {
+      api.post('vaults/' + payload)
+        .then(res => {
+          dispatch('getVaultKeeps', payload.vaultId)
+        })
+        .catch(e => {
+          console.log("cannot make vault keep at this time")
+        })
+    },
+    getvaultKeeps({ commit, dispatch }, vaultId)
+    api.get('vaults/' + vaultId + '/keeps')
+      .then(res => {
+        commit('setVaultKeeps', res.data)
+      })
+  },
+
+  deleteVault({ commit, dispatch }, payload) {
+    api.delete('vaults/' + payload.id)
+      .then(res => {
+        dispatch('getUserVaults')
+      })
+      .catch(e => {
+        console.log("Cannot delete this vault")
+      })
+  },
 
 
 
-  }
+}
 }
 )

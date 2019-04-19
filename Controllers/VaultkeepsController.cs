@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Keepr.Controllers;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+
+
 
 namespace keepr.Controllers
 {
@@ -30,25 +33,43 @@ namespace keepr.Controllers
       return Ok(results);
     }
 
+
+    //Create VAULT KEEP
+    // [HttpPost("{vaultId}")]
+    // [Authorize]
+    // public ActionResult<Vaultkeep>createVaultKeep([FromBody]Vaultkeep newVaultKeep)
+    // {
+    //  newVaultKeep.UserId = HttpContext.User.Identity.Name;
+    //   Vaultkeep result = _vkr.createVaultKeep(newVaultKeep);
+    //   if (result == null)
+    //   {
+    //     return BadRequest("did not create new vault keep");
+    //   }
+    //   return Ok(result);
+
+    // }
+
+
+    //Get ALL KEEPS IN VAULT BY KEEP ID
+    [HttpGet("{vaultId}/keeps")]
+    [Authorize]
+    public ActionResult<IEnumerable<Keep>> GetVaultKeep(int vaultId)
+    {
+      string UserId = HttpContext.User.Identity.Name;
+      IEnumerable<Keep> result = _vkr.GetVaultKeep(vaultId, UserId);
+      if (result == null)
+      {
+        return BadRequest();
+      }
+      return Ok(result);
+    }
   }
+
 }
 
-//   //Create VAULT KEEP
-//   [HttpPost("{vaultId}")]
-//   [Authorize]
-//   public ActionResult<Vaultkeep> newVaultKeep([FromBody]Vaultkeep newVaultKeep)
-//   {
-//     newVaultKeep.UserId = HttpContext.User.Identity.Name;
-//     Vaultkeep result = _vkr.NewVaultKeep(newVaultKeep);
-//     if (newVaultKeep == null)
-//     {
-//       return BadRequest("did not create new vault keep");
-//     }
-//     return Ok(newVaultKeep)
-//       ;
-//   }
 
-// }
+
+
 
 // // //DELETE KEEPS FROM VAULT
 
@@ -67,17 +88,5 @@ namespace keepr.Controllers
 //   IEnumerable<Keep> results = _vkr.GetKeeps(id);
 //   return Ok(results);
 // }
-
-
-// //Get ALL KEEPS IN VAULT BY KEEP ID
-// [HttpGet("{id}/keeps")]
-// public ActionResult<IEnumerable<Keep>> GetKeeps(int id)
-// {
-//   IEnumerable<Keep> results = _vkr.GetKeeps(id);
-//   return Ok(results);
-// }
-
-// [HttpDelete("{id}/user")]
-// public ActionResult<IEnumberable<User>> DeleteVaultKeeps(int id)
 
 
