@@ -2,7 +2,7 @@
   <div class="LoginBG">
     <div class="container-fluid">
       <div class="login">
-        <form v-if="loginForm" @submit.prevent="loginUser" claa="m-4">
+        <form v-if="loginForm" @submit.prevent="loginUser" class="m-4">
           <div class="form-group text-left">
             <label>Email:</label>
             <input
@@ -49,16 +49,19 @@
         </div>
       </div>
     </div>
+    <public-keeps></public-keeps>
   </div>
 </template>
 
 <script>
 // import router from "@/router.js";
+import PublicKeeps from "@/components/PublicKeeps.vue";
 export default {
   name: "login",
   mounted() {
     //checks for valid session
     this.$store.dispatch("authenticate");
+    this.$store.dispatch("getAllKeeps");
   },
   data() {
     return {
@@ -71,9 +74,19 @@ export default {
         email: "",
         password: "",
         username: ""
-      }
+      },
+      newKeep: {}
     };
   },
+  computed: {
+    keeps() {
+      return this.store.state.keeps;
+    }
+  },
+  components: {
+    PublicKeeps
+  },
+
   methods: {
     register() {
       this.$store.dispatch("register", this.newUser);

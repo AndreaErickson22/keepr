@@ -5,7 +5,7 @@ import router from './router'
 
 Vue.use(Vuex)
 
-let baseUrl = location.host.includes('localhost') ? '//localhost:5000/' : '/'
+let baseUrl = location.host.includes('localhost') ? 'https://localhost:5001/' : '/'
 
 let auth = Axios.create({
   baseURL: baseUrl + "account/",
@@ -22,7 +22,7 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     user: {},
-    publicKeeps: {},
+    publicKeeps: [],
     publicVault: {},
     userKeeps: [],
     vaults: [],
@@ -82,13 +82,24 @@ export default new Vuex.Store({
           console.log('Login Failed')
         })
     },
+    logout({ commit, dispatch }) {
+      auth.delete('logout')
+        .then(res => {
+          commit('setUser', {})
+          router.push({ name: 'login' })
+        })
+        .catch(e => {
+          console.log('Logout Failed')
+        })
+    },
     //#endregion
     ///#region--Keeps--
 
-    addUserKeeps({ commit, dispatch }, payload) {
+    addUserKeep({ commit, dispatch }, payload) {
       api.post('/keeps', payload)
         .then(res => {
-          dispatch('getUsersKeeps')
+
+          dispatch('getUserKeeps')
         })
     },
     getUserKeeps({ commit }) {
@@ -96,7 +107,13 @@ export default new Vuex.Store({
         .then(res => {
           commit("setUserKeeps", res.data)
         })
-      router.push({ name: "keeps" })
+      // router.push({ name: "home" })
+    },
+    getAllKeeps({ commit }) {
+      api.get('/keeps/')
+        .then(res => {
+          commit("setPublicKeeps", res.data)
+        })
     },
     editKeep({ commit, dispatch }, payload) {
       api.put('/keeps', payload)
@@ -116,8 +133,9 @@ export default new Vuex.Store({
     getUserVaults({ commit, dispatch }, payload) {
       api.get('vaults/', payload)
         .then(res => {
-          dispatch("getUserVaults", res.data)
+          commit("setVaults", res.data)
         })
+
     },
     addUserVaults({ commit, dispatch }, payload) {
       api.post('vaults/', payload)
@@ -141,25 +159,25 @@ export default new Vuex.Store({
           console.log("cannot make vault keep at this time")
         })
     },
-    getvaultKeeps({ commit, dispatch }, vaultId)
-    api.get('vaults/' + vaultId + '/keeps')
-      .then(res => {
-        commit('setVaultKeeps', res.data)
-      })
-  },
+    //   getvaultKeeps({ commit, dispatch }, vaultId)
+    //   api.get('vaults/' + vaultId + '/keeps')
+    //     .then(res => {
+    //       commit('setVaultKeeps', res.data)
+    //     })
+    // },
 
-  deleteVault({ commit, dispatch }, payload) {
-    api.delete('vaults/' + payload.id)
-      .then(res => {
-        dispatch('getUserVaults')
-      })
-      .catch(e => {
-        console.log("Cannot delete this vault")
-      })
-  },
-
+    deleteVault({ commit, dispatch }, payload) {
+      api.delete('vaults/' + payload.id)
+        .then(res => {
+          dispatch('getUserVaults')
+        })
+        .catch(e => {
+          console.log("Cannot delete this vault")
+        })
+    }
+  }
 
 
 }
-}
+
 )

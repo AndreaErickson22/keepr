@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: "VaultView",
+  name: "Vaults",
   props: [],
   data() {
     return {};

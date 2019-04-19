@@ -1,12 +1,18 @@
 <template>
-  <!-- <nav class="navbar sticky-top navbar-light bg-light">
-    <a class="navbar-brand" href="#">Sticky top</a>
-  </nav>-->
-
   <div id="app">
+    <navbar></navbar>
     <router-view/>
   </div>
 </template>
+<script>
+import Navbar from "@/components/NavBar.vue";
+export default {
+  components: {
+    Navbar
+  }
+};
+</script>
+
 
 <style>
 #app {
@@ -16,7 +22,9 @@
   text-align: center;
   color: #2c3e50;
 }
-
+.navbar {
+  background-color: aqua;
+}
 #nav {
   padding: 30px;
 }

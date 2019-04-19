@@ -25,7 +25,7 @@ namespace keepr.Repositories
     //Get all Keeps by user id
     public IEnumerable<Keep> GetByUserId(string userId)
     {
-      return _db.Query<Keep>("SELECT * FROM keeps WHERE userId =@UserId", param: new { userId });
+      return _db.Query<Keep>("SELECT * FROM keeps WHERE userId =@userId", new { userId });
     }
 
     // // GET KEEP BY ID

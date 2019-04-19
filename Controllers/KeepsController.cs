@@ -36,7 +36,8 @@ namespace Keepr.Controllers
 
     //Get All Keeps by user id
     [HttpGet("user")]
-    public ActionResult<IEnumerable<Keep>> GetByUser(string user)
+    [Authorize]
+    public ActionResult<IEnumerable<Keep>> GetByUser()
     {
       string UserId = HttpContext.User.Identity.Name;
       IEnumerable<Keep> keepList = _kr.GetByUserId(UserId);
