@@ -6,8 +6,8 @@
         <div class="col-6">
           <form @submit.prevent="addKeep" class="Form-BG">
             <div name="keep-form" class="form-group col-12 text-center">
-              <h3>Create a new Keep</h3>
-              <label for="formGroupExampleInput">Keep Name</label>
+              <h3>Create a new Artboard</h3>
+              <label for="formGroupExampleInput">Artboard Name</label>
               <input
                 type="text"
                 class="form-control m-2 shadow"
@@ -44,8 +44,8 @@
         <div class="col-6">
           <form @submit.prevent="addVault()" class="Form-BG">
             <div name="vault-form" class="form-group text-center">
-              <h3>Create a new Vault</h3>
-              <label for="formGroupExampleInput">Vault Name</label>
+              <h3>Create a new Art Vault</h3>
+              <label for="formGroupExampleInput">Art Vault Portfolio Name</label>
               <input
                 type="text"
                 class="form-control m-2 shadow"
@@ -70,7 +70,8 @@
         </div>
       </div>
     </div>
-    <vaults v-for="vault in vaults" :vault="vault"></vaults>
+    <!-- <vaults v-for="vault in vaults" v:vault="vault"></vaults> -->
+    <vaults v-for="vault in vaults" v-bind:key="vault"></vaults>
     <div class="col-12">
       <private-keeps></private-keeps>
     </div>
@@ -153,8 +154,11 @@ export default {
 }
 .Form-BG {
   background-color: plum;
-  width: 300px;
+  width: 400px;
   height: auto;
   align-content: center;
+}
+.form-control {
+  width: 300px;
 }
 </style>

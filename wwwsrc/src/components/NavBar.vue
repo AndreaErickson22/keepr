@@ -11,6 +11,9 @@
 
       <router-link to="/login">
         <button @click="logOut">Log Out</button>
+        <!-- <div class="nav-text">
+          <h1>Welcome to your Portfolio</h1>
+        </div>-->
       </router-link>
     </nav>
   </div>
@@ -35,3 +38,10 @@ export default {
   components: {}
 };
 </script>
+<style>
+.nav-text {
+  justify-content: center;
+  align-content: center;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+</style>
